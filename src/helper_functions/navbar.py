@@ -8,7 +8,7 @@ import importlib
 
 
 def create_navbar():
-    nav_item = dbc.NavItem(dbc.NavLink("Home", href="/home"))
+    nav_item = dbc.NavItem(dbc.NavLink("Home", href="/home", style={'color': 'black'}))
     dropdown = dbc.DropdownMenu(
                     nav=True,
                     in_navbar=True,
@@ -16,10 +16,10 @@ def create_navbar():
                     children=[
                         dbc.DropdownMenuItem("Home", href='/home'),
                         dbc.DropdownMenuItem(divider=True),
-                        dbc.DropdownMenuItem("Populations", href='/populations'),
-                        dbc.DropdownMenuItem("International Transactions", href='/international_transactions'),
                     ],
-                )
+                    toggle_style={'color': 'black'}
+
+    )
 
     logo = dbc.Navbar(
         dbc.Container(
@@ -28,12 +28,12 @@ def create_navbar():
                     # Use row and col to control vertical alignment of logo / brand
                     dbc.Row(
                         [
-                            dbc.Col(html.Img(src=Image.open(load_nav_logo()), height="80px", width='80px')),
+                            dbc.Col(html.Img(src=Image.open(load_nav_logo()), height="40px", width='80px')),
                         ],
                         align="left",
                         className="g-0",
                     ),
-                    href="https://kpmg.com/xx/en/home.html",
+                    href="https://www.amey.co.uk/",
                     style={"textDecoration": "none"},
                 ),
                 dbc.NavbarToggler(id="navbar-toggler2", n_clicks=0),
@@ -42,13 +42,14 @@ def create_navbar():
                         [nav_item, dropdown],
                         className="ms-auto",
                         navbar=True,
+                        style={'color': 'black'}
                     ),
                     id="navbar-collapse2",
                     navbar=True,
-                ),
-            ],
+                )
+            ]
         ),
-        color="#00338D",
+        color="#D3D3D3",
         dark=True,
         sticky="top",
         className="mb-5",
@@ -56,5 +57,3 @@ def create_navbar():
     )
     return logo
 
-if __name__ == '__main__':
-    load_nav_logo()

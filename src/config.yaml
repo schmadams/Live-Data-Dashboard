@@ -1,6 +1,21 @@
-sic_hieracrhy: 'C:\Users\samad\Documents\KPMG PKYC\sic_hierarchy.xlsx'
-db:
-  path: 'C:\Users\samad\Documents\KPMG PKYC'
-  name: 'pkyc_demo_db.db'
-  full: 'C:\Users\samad\Documents\KPMG PKYC\pkyc_demo_db.db'
-entity_types: ['private_limited_company', 'llp', 'sole_trader', 'charity']
+raw_data:
+  raw_data_file: 'Live-Data-v1.xlsx'
+  sheets:
+    data: 'Live Data'
+    table_lkp: 'Database Structure'
+  categorical_fields: ['Pass_Gate', 'Reason', 'Time_Departure',
+                       'Time_Connect', 'Alone', 'Colleagues', 'Friends',
+                       'Child_0_2', 'Child_3_9', 'Child_10_17', 'Flight_Delay',
+                       'Number_Trip', 'Nationality', 'Residency', 'Age', 'Gender',
+                       'Checkin_Online', 'Checkin_Offsite',
+                       'Checkin_Desk', 'Checkin_Self', 'Checkin_Selfbag',
+                       'Checkin_Other', 'Checkin_Area', 'Transport', 'Parking']
+  rating_fields: ['Overall_Ex', 'Access_Ease', 'Access_Signs', 'Transport_VFM',
+       'Checkin_Ease', 'Checkin_Wait', 'Checkin_Staff', 'Security_Ease',
+       'Security_Wait', 'Security_Staff', 'Border_Wait', 'Border_Staff',
+       'Restaurants', 'Restaurants_VFM', 'Shops', 'Shops_VFM',
+       'RestShops_Staff', 'Gates_Comfort', 'Seats_Availability ', 'Way_Ease',
+       'FlightInfo_Availability', 'Walking', 'Connect_Ease', 'Airport_Staff',
+       'WiFi', 'Charging_Availability', 'Entertainement',
+       'Washrooms_Availability', 'Washrooms_Clean', 'Health', 'Clean',
+       'Ambience', 'Safe_Secure', 'Happy', 'Excited', 'Confident', 'Relaxed']

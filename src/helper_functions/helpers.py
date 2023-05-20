@@ -11,17 +11,17 @@ def load_config():
                 return yaml.safe_load(stream)
 
 
-def load_sic_descs():
-    xlsx_path = load_config()['sic_hieracrhy']
-    sic_descs = pd.read_excel(xlsx_path, sheet_name='reworked structure')
-    for col in sic_descs.columns:
-        sic_descs = sic_descs.rename(columns={col: col.lower().strip()})
-    return sic_descs.rename(columns={'most disaggregated level': 'sic'})
+def load_raw_data():
+    config, raw_data = load_config(), {}
+    for dir in Path(__file__).parent.parent.parent.glob('*'):
+        if str(dir).endswith('resources'):
+            for file in dir.glob('*'):
+                if str(file).endswith(config['raw_data']['raw_data_file']):
+                    for sheet in config['raw_data']['sheets']:
+                        raw_data[sheet] = pd.read_excel(file, sheet_name=config['raw_data']['sheets'][sheet])
+    return raw_data
 
-def join_sic_descs(df, key='sic'):
-    sic_desc = load_sic_descs()
-    df = df.merge(sic_desc, how='left', on=key)
-    return df.drop(columns=['class', 'sub class', 'level headings'])
+
 
 def header_strings(string):
     return string.lower().strip().replace('_', ' ').title()
@@ -49,6 +49,6 @@ def load_custom_css():
     return str(customcss)
 
 if __name__ == '__main__':
-    sic_desc = load_sic_descs()
+    sic_desc = load_raw_data()
     a=1
     a=1

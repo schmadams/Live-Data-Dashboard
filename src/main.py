@@ -1,9 +1,7 @@
 from dash import html, dcc
 from dash.dependencies import Input, Output
-from src.pages.home import create_page_home
-from src.pages.populations import populations_layout
+from src.pages.home import home_layout
 from src.helper_functions.helpers import load_custom_css
-from src.pages.international_transactions import international_transactions_layout
 import dash
 import dash_bootstrap_components as dbc
 import logging
@@ -13,7 +11,7 @@ log.setLevel(logging.ERROR)
 
 cust_css = load_custom_css()
 
-app = dash.Dash(__name__, suppress_callback_exceptions=False, external_stylesheets=[dbc.themes.BOOTSTRAP, cust_css])
+app = dash.Dash(__name__, title='Live Data Analysis', suppress_callback_exceptions=False, external_stylesheets=[dbc.themes.BOOTSTRAP, cust_css])
 
 server = app.server
 app.config.suppress_callback_exceptions = False
@@ -21,18 +19,16 @@ app.config.suppress_callback_exceptions = False
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
-], style={'background': '#261C67', 'height': '100vw', 'width': '100vw'})
+], style={'background': 'white', 'height': '100vw', 'width': '100vw'})
 
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/populations':
-        return populations_layout()
-    if pathname == '/international_transactions':
-        return international_transactions_layout()
+    if pathname == '/home':
+        return home_layout()
     else:
-        return create_page_home()
+        return home_layout()
 
 
 if __name__ == '__main__':
