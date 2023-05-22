@@ -1,7 +1,8 @@
-from src.helper_functions.navbar import create_navbar
+from src.app_helper_functions.navbar import create_navbar
 from dash import html, dash_table, dcc
 import dash_bootstrap_components as dbc
-from src.helper_functions.datatables_builder import DataTableBuilder
+import dash_daq as daq
+from src.app_helper_functions.datatables_builder import DataTableBuilder
 
 def cat_scatters(prefix):
     return [
@@ -35,13 +36,17 @@ def timeline_plot(prefix):
 def cat_2_rat_section_1(prefix):
     return [
         html.Div(className='row', children=[
-            dcc.Dropdown(id=f'{prefix}categorical-rating-cat-dropdown', multi=False,
-                         style={'width': '10vw', 'margin': 'auto'}, placeholder='Select Categorical Variable'),
-            dcc.Dropdown(id=f'{prefix}categorical-rating-rat-dropdown', multi=False,
-                         style={'width': '10vw', 'margin': 'auto'}, placeholder='Select Rating Field'),
-        ], style={'width': '40vw', 'margin': 'auto'}),
-        html.Div(className='row', children=[
-            dcc.Graph(id=f'{prefix}cat-rat-figure-1', style={'width': '60%', 'height': '90%'})
+            html.Div(className='column', children=[
+                dcc.Dropdown(id=f'{prefix}categorical-rating-cat-dropdown', multi=False,
+                             style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Categorical Variable'),
+                dcc.Dropdown(id=f'{prefix}categorical-rating-rat-dropdown', multi=False,
+                             style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Rating Field'),
+                daq.BooleanSwitch(id=f'{prefix}cat-2-rat-switch', on=False, color="red"),
+                html.P("Show Percentages", style={'margin': 'auto', 'text-align': 'center', 'font-size': '12px'})
+            ], style={'width': '10%', 'margin': 'auto'}),
+            html.Div(id=f'{prefix}cat-2-rat-fig-container', hidden=True, className='column', children=[
+                dcc.Graph(id=f'{prefix}cat-rat-figure-1', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
+            ], style={'width': '80%', 'margin': 'auto'})
         ])
     ]
 
@@ -52,7 +57,7 @@ def page_layout(prefix):
             children=[
                 dbc.AccordionItem(title='Categorical Ratings', children=cat_2_rat_section_1(prefix)),
                 dbc.AccordionItem(title='Categorical Scatter Plot', children=cat_scatters(prefix)),
-                dbc.AccordionItem(title='Single/Multiple field distribution analysis', children=timeline_plot(prefix))
+                dbc.AccordionItem(title='Time Series Analysis', children=timeline_plot(prefix))
             ]
         )
     ]

@@ -4,7 +4,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='helper_functions',
+    name='app_helper_functions',
     author='Sam Adams ',
     package_dir={'': 'src'},
     packages=setuptools.find_packages(where='src'),

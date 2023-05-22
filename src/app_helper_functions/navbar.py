@@ -1,6 +1,6 @@
 import sys
 import dash_bootstrap_components as dbc
-from src.helper_functions.helpers import load_nav_logo
+from src.app_helper_functions.helpers import load_nav_logo
 from pathlib import Path
 from dash import html, get_asset_url
 from PIL import Image

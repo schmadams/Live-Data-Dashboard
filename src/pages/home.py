@@ -1,6 +1,7 @@
 from src.templates.home.main_layout import page_template
-from src.helper_functions.helpers import load_raw_data, load_config, data_table_content
+from src.app_helper_functions.helpers import load_raw_data, load_config, data_table_content
 from src.pipelines.plots.cat_scatter_plot import CatScatter
+from src.pipelines.plots.cat_2_rat_plot import CategoricalRatingFigure
 from src.pipelines.plots.rating_timeline import RatingTimeline
 from dash import callback, Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -142,3 +143,37 @@ def cat_2_rat_rat_dropdown(config, selected):
     options = [{'label': str(name).replace('_', ''), 'value': name}
                for name in config['raw_data']['rating_fields']]
     return options, selected
+
+
+@callback(
+    Output(f'{prefix}cat-rat-figure-1', 'figure'),
+    Output(f'{prefix}cat-2-rat-fig-container', 'hidden'),
+    Input(f'{prefix}categorical-rating-rat-dropdown', 'value'),
+    Input(f'{prefix}categorical-rating-cat-dropdown', 'value'),
+    Input(f'{prefix}cat-2-rat-switch', 'on'),
+    State(f'{prefix}data', 'data'),
+    prevent_inital_call=True
+)
+def create_cat_2_rat_figure(rat, cat, switch, data):
+    if None in [cat, rat, data]:
+        raise PreventUpdate
+
+    data = pd.DataFrame(data['data'])
+    fig_builder = CategoricalRatingFigure(data=data, cat=cat, rat=rat)
+    if switch:
+        fig = fig_builder.create_percentage_figure()
+    else:
+        fig = fig_builder.create_count_figure()
+    return fig
+
+# @callback(
+#     Output(f'{prefix}cat-2-rat-fig-container', 'hidden'),
+#     Input(f'{prefix}cat-rat-figure-1', 'figure'),
+#     Input(f'{prefix}categorical-rating-rat-dropdown', 'value'),
+#     Input(f'{prefix}categorical-rating-cat-dropdown', 'value'),
+#     Input(f'{prefix}cat-2-rat-switch', 'on'),
+#     State(f'{prefix}data', 'data'),
+#     prevent_inital_call=True
+# )
+# def hide_cat_2_rat()
+

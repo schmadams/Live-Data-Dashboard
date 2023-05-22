@@ -1,7 +1,7 @@
 from dash import html, dcc
 from dash.dependencies import Input, Output
 from src.pages.home import home_layout
-from src.helper_functions.helpers import load_custom_css
+from src.app_helper_functions.helpers import load_custom_css
 import dash
 import dash_bootstrap_components as dbc
 import logging

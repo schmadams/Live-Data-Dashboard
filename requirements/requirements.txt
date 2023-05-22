@@ -12,10 +12,13 @@ dash==2.9.3
     # via
     #   -r requirements/requirements.in
     #   dash-bootstrap-components
+    #   dash-daq
 dash-bootstrap-components==1.4.1
     # via -r requirements/requirements.in
 dash-core-components==2.0.0
     # via dash
+dash-daq==0.5.0
+    # via -r requirements/requirements.in
 dash-html-components==2.0.0
     # via dash
 dash-table==5.0.0
@@ -24,6 +27,8 @@ et-xmlfile==1.1.0
     # via openpyxl
 flask==2.2.3
     # via dash
+helper-functions @ git+https://github.com/portfolio-samalytics/helper-functions-v2.git
+    # via -r requirements/requirements.in
 importlib-metadata==6.3.0
     # via flask
 itsdangerous==2.1.2

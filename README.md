@@ -13,4 +13,7 @@ Exploring risk in a customer dataset at different granualities and varying sub-p
     pip install invoke
 ```
 
+``` shell
+    invoke rebuild
+```
 
