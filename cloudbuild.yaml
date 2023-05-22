@@ -3,4 +3,4 @@ steps:
   args: ['app', 'deploy']
   timeout: '60s'
 options:
-  logging: 'live-data-analysis-amey.appspot.com'
+  logging: CLOUD_LOGGING_ONLY
