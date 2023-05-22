@@ -3,4 +3,4 @@ steps:
   args: ['app', 'deploy']
   timeout: '60s'
 options:
-  logging: NONE
+  logging: CLOUD_LOGGING_ONLY
