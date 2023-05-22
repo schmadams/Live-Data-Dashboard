@@ -4,3 +4,6 @@ instance_class: F2
 env_variables:
   DASH_PATH_NAME: '/'
   DASH_CONFIGURATION: 'production'
+
+
+entrypoint: gunicorn -b :$PORT src.app:server
