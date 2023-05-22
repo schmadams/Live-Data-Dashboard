@@ -44,8 +44,9 @@ def cat_2_rat_section_1(prefix):
                 daq.BooleanSwitch(id=f'{prefix}cat-2-rat-switch', on=False, color="red"),
                 html.P("Show Percentages", style={'margin': 'auto', 'text-align': 'center', 'font-size': '12px'})
             ], style={'width': '10%', 'margin': 'auto'}),
-            html.Div(id=f'{prefix}cat-2-rat-fig-container', hidden=True, className='column', children=[
-                dcc.Graph(id=f'{prefix}cat-rat-figure-1', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
+            # dcc.Graph(id=f'{prefix}test', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
+            html.Div(id=f'{prefix}cat-2-rat-fig-container', hidden=False, className='column', children=[
+                dcc.Graph(id=f'{prefix}test', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
             ], style={'width': '80%', 'margin': 'auto'})
         ])
     ]
