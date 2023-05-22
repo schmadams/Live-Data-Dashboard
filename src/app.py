@@ -1,7 +1,6 @@
 from dash import html, dcc
 from dash.dependencies import Input, Output
 from src.pages.home import home_layout
-from src.app_helper_functions.helpers import load_custom_css
 import dash
 import dash_bootstrap_components as dbc
 import logging
@@ -9,9 +8,8 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 
-cust_css = load_custom_css()
 
-app = dash.Dash(__name__, title='Live Data Analysis', suppress_callback_exceptions=False, external_stylesheets=[dbc.themes.BOOTSTRAP, cust_css])
+app = dash.Dash(__name__, title='Live Data Analysis', suppress_callback_exceptions=False, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 server = app.server
 
@@ -32,5 +30,8 @@ def display_page(pathname):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=True)
+
+    #todo - bug in loading the bar charts when filters have been created for the second plot
+
 

@@ -6,7 +6,7 @@ from dash import html, get_asset_url
 from PIL import Image
 import importlib
 
-
+#todo - make navbar luton airport theme
 def create_navbar():
     nav_item = dbc.NavItem(dbc.NavLink("Home", href="/home", style={'color': 'black'}))
     dropdown = dbc.DropdownMenu(

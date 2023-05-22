@@ -6,18 +6,24 @@ class CategoricalRatingFigure:
         self.cat = cat
         self.rat = rat
         self.colors = ['#DCEBF9', '#B3C8E8', '#8CA8D9', '#6493CC', '#406EAF']
+        self.rating_order = sorted(self.data[self.rat].unique(), key=int)
+        self.cat_order = [str(x) for x in sorted(self.data[self.cat].unique())]
 
+    def category_sort_key(self, category):
+        try:
+            return int(category)
+        except ValueError:
+            return category
 
     def create_count_figure(self):
         plotdf = self.data.groupby([self.cat, self.rat]).size().reset_index(name='count')
         plotdf[self.cat] = plotdf[self.cat].astype('str')
         plotdf[self.rat] = plotdf[self.rat].astype('str')
 
-        rating_order = sorted(plotdf[self.rat].unique(), key=int)
-
         fig = px.bar(plotdf, x=self.cat, y='count',
                      color_discrete_sequence=self.colors,
-                     color=self.rat, barmode='stack', text='count', category_orders={self.rat: rating_order},)
+                     color=self.rat, barmode='stack', text='count', category_orders={self.rat: self.rating_order,
+                                                                                     self.cat: self.cat_order})
 
         fig.update_layout(
             barmode='stack',
@@ -26,6 +32,7 @@ class CategoricalRatingFigure:
         )
 
         fig.update_traces(textposition='auto', insidetextanchor='middle', textfont_size=10)
+        fig.update_xaxes(categoryorder='category ascending')
         for trace in fig.data:
             if trace.textangle is not None and any(angle > 45 and angle < 135 for angle in trace.textangle):
                 trace.text = [None] * len(trace.text)
@@ -44,9 +51,6 @@ class CategoricalRatingFigure:
         plotdf['percentage'] = (plotdf['count'] / plotdf['total_count']) * 100
         plotdf = plotdf.round(1)
 
-        # Sort the unique rating values in ascending order
-        rating_order = sorted(plotdf[self.rat].unique(), key=int)
-
         # Create the stacked bar chart with percentage labels
         fig = px.bar(
             plotdf,
@@ -54,7 +58,7 @@ class CategoricalRatingFigure:
             y='percentage',
             color_discrete_sequence=self.colors,
             color=self.rat,
-            category_orders={self.rat: rating_order},  # Set rating order
+            category_orders={self.rat: self.rating_order, self.cat: self.cat_order},  # Set rating order
             barmode='stack',
             text='percentage',
             hover_data={'count': True, 'percentage': ':.2f%'}

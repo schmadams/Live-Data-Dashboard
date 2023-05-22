@@ -44,8 +44,27 @@ def cat_2_rat_section_1(prefix):
                 daq.BooleanSwitch(id=f'{prefix}cat-2-rat-switch', on=False, color="red"),
                 html.P("Show Percentages", style={'margin': 'auto', 'text-align': 'center', 'font-size': '12px'})
             ], style={'width': '10%', 'margin': 'auto'}),
-            html.Div(id=f'{prefix}cat-2-rat-fig-container', hidden=True, className='column', children=[
-                dcc.Graph(id=f'{prefix}cat-rat-figure-1', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
+            # dcc.Graph(id=f'{prefix}test', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
+            html.Div(id=f'{prefix}cat-2-rat-fig-container', hidden=False, className='column', children=[
+                dcc.Graph(id=f'{prefix}cat-2-rat-figure', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
+            ], style={'width': '80%', 'margin': 'auto'})
+        ])
+    ]
+
+def latest_reviews_section(prefix):
+    return [
+        html.Div(className='row', children=[
+            html.Div(className='column', children=[
+                dcc.Dropdown(id=f'{prefix}latest-reviews-granularity-dropdown', multi=True,
+                             style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Granularity'),
+                dcc.Dropdown(id=f'{prefix}latest-reviews-filter-granularity-dropdown', multi=True,
+                             style={'width': '10vw', 'margin': '1vw auto', 'opacity': '0.5', 'pointer-events': 'none'},
+                             placeholder='Select Granularity'),
+                dcc.Dropdown(id=f'{prefix}latest-reviews-rating-dropdown', multi=False,
+                             style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Granularity'),
+            ], style={'width': '10%', 'margin': 'auto'}),
+            html.Div(id=f'{prefix}latest-reviews-figure-container', hidden=False, className='column', children=[
+                dcc.Graph(id=f'{prefix}latest-reviews-figure', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
             ], style={'width': '80%', 'margin': 'auto'})
         ])
     ]
@@ -55,6 +74,7 @@ def page_layout(prefix):
         create_navbar(),
         dbc.Accordion(
             children=[
+                # dbc.AccordionItem(title='Latest Reviews', children=latest_reviews_section(prefix)),
                 dbc.AccordionItem(title='Categorical Ratings', children=cat_2_rat_section_1(prefix)),
                 dbc.AccordionItem(title='Categorical Scatter Plot', children=cat_scatters(prefix)),
                 dbc.AccordionItem(title='Time Series Analysis', children=timeline_plot(prefix))
