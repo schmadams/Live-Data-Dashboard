@@ -2,3 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy']
   timeout: '60s'
+options:
+  build:
+    service_account: 'live-data-analysis-amey@appspot.gserviceaccount.com'
+    logs_bucket: 'live-data-analysis-amey.appspot.com'
