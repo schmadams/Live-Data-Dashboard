@@ -14,6 +14,7 @@ cust_css = load_custom_css()
 app = dash.Dash(__name__, title='Live Data Analysis', suppress_callback_exceptions=False, external_stylesheets=[dbc.themes.BOOTSTRAP, cust_css])
 
 server = app.server
+
 app.config.suppress_callback_exceptions = False
 
 app.layout = html.Div([
@@ -21,11 +22,9 @@ app.layout = html.Div([
     html.Div(id='page-content')
 ], style={'background': 'white', 'height': '100vw', 'width': '100vw'})
 
-
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    print(pathname)
     if pathname == '/home':
         return home_layout()
     else:
@@ -34,3 +33,4 @@ def display_page(pathname):
 
 if __name__ == '__main__':
     app.run_server(debug=False)
+

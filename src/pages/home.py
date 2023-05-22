@@ -148,7 +148,6 @@ def cat_2_rat_rat_dropdown(config, selected):
 
 @callback(
     Output(f'{prefix}cat-rat-figure-1', 'figure'),
-    Output(f'{prefix}cat-2-rat-fig-container', 'hidden'),
     Input(f'{prefix}categorical-rating-rat-dropdown', 'value'),
     Input(f'{prefix}categorical-rating-cat-dropdown', 'value'),
     Input(f'{prefix}cat-2-rat-switch', 'on'),
@@ -165,6 +164,7 @@ def create_cat_2_rat_figure(rat, cat, switch, data):
             fig = fig_builder.create_percentage_figure()
         else:
             fig = fig_builder.create_count_figure()
+        print(fig)
     return fig
 
 @callback(
