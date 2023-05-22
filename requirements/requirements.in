@@ -6,3 +6,4 @@ pyyaml
 openpyxl
 Pillow
 plotly_express
+dash_daq
