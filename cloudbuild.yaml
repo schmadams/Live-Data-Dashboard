@@ -3,6 +3,4 @@ steps:
   args: ['app', 'deploy']
   timeout: '60s'
 options:
-  build:
-    service_account: 'live-data-analysis-amey@appspot.gserviceaccount.com'
-    logs_bucket: 'live-data-analysis-amey.appspot.com'
+  logging: 'live-data-analysis-amey.appspot.com'
