@@ -3,4 +3,5 @@ steps:
   args: ['app', 'deploy']
   timeout: '60s'
 options:
-  logging: CLOUD_LOGGING_ONLY
+  logging: NONE
+  serviceAccount: 'live-data-analysis-amey@appspot.gserviceaccount.com'
