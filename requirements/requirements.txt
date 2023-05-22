@@ -27,6 +27,8 @@ et-xmlfile==1.1.0
     # via openpyxl
 flask==2.2.3
     # via dash
+gunicorn==20.1.0
+    # via -r requirements/requirements.in
 helper-functions @ git+https://github.com/portfolio-samalytics/helper-functions-v2.git
     # via -r requirements/requirements.in
 importlib-metadata==6.3.0
@@ -94,3 +96,6 @@ werkzeug==2.2.3
     # via flask
 zipp==3.15.0
     # via importlib-metadata
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools

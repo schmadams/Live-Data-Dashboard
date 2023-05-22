@@ -6,6 +6,7 @@ pyyaml
 openpyxl
 Pillow
 plotly_express
+gunicorn
 dash_daq
 git+https://github.com/portfolio-samalytics/helper-functions-v2.git#egg=helper-functions
 
