@@ -17,3 +17,6 @@ Exploring risk in a customer dataset at different granualities and varying sub-p
     invoke rebuild
 ```
 
+## Cloud Build Specs
+
+Here will be a breakdown of the cloud build specs for the deployment pipeline
