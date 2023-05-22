@@ -20,6 +20,7 @@ def home_layout():
 )
 def initial_load(container):
     data = load_raw_data()
+    print('page opened')
     for name, df in data.items():
         if name == 'data':
             df = df[df['Status'] == 'Completed']
@@ -156,24 +157,29 @@ def cat_2_rat_rat_dropdown(config, selected):
 )
 def create_cat_2_rat_figure(rat, cat, switch, data):
     if None in [cat, rat, data]:
-        raise PreventUpdate
-
-    data = pd.DataFrame(data['data'])
-    fig_builder = CategoricalRatingFigure(data=data, cat=cat, rat=rat)
-    if switch:
-        fig = fig_builder.create_percentage_figure()
+        fig = None
     else:
-        fig = fig_builder.create_count_figure()
+        data = pd.DataFrame(data['data'])
+        fig_builder = CategoricalRatingFigure(data=data, cat=cat, rat=rat)
+        if switch:
+            fig = fig_builder.create_percentage_figure()
+        else:
+            fig = fig_builder.create_count_figure()
     return fig
 
-# @callback(
-#     Output(f'{prefix}cat-2-rat-fig-container', 'hidden'),
-#     Input(f'{prefix}cat-rat-figure-1', 'figure'),
-#     Input(f'{prefix}categorical-rating-rat-dropdown', 'value'),
-#     Input(f'{prefix}categorical-rating-cat-dropdown', 'value'),
-#     Input(f'{prefix}cat-2-rat-switch', 'on'),
-#     State(f'{prefix}data', 'data'),
-#     prevent_inital_call=True
-# )
-# def hide_cat_2_rat()
+@callback(
+    Output(f'{prefix}cat-2-rat-fig-container', 'hidden'),
+    Input(f'{prefix}cat-rat-figure-1', 'figure'),
+    Input(f'{prefix}categorical-rating-rat-dropdown', 'value'),
+    Input(f'{prefix}categorical-rating-cat-dropdown', 'value'),
+    prevent_inital_call=True
+)
+def hide_cat_2_rat(fig, rat, cat):
+    if None in [fig, rat, cat]:
+        hidden = True
+    else:
+        hidden = False
+
+    return hidden
+
 

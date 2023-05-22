@@ -25,6 +25,7 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
+    print(pathname)
     if pathname == '/home':
         return home_layout()
     else:
