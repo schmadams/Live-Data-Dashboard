@@ -6,6 +6,8 @@ class CategoricalRatingFigure:
         self.cat = cat
         self.rat = rat
         self.colors = ['#DCEBF9', '#B3C8E8', '#8CA8D9', '#6493CC', '#406EAF']
+        self.data = self.data.dropna(subset=[self.rat])
+        self.data[self.rat] = self.data[self.rat].astype('int')
         self.rating_order = sorted(self.data[self.rat].unique(), key=int)
         self.cat_order = [str(x) for x in sorted(self.data[self.cat].unique())]
 

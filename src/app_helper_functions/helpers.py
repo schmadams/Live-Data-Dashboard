@@ -14,7 +14,7 @@ def load_config():
 def load_raw_data():
     config, raw_data = load_config(), {}
     for dir in Path(__file__).parent.parent.parent.glob('*'):
-        if str(dir).endswith('resources'):
+        if str(dir).endswith('assets'):
             for file in dir.glob('*'):
                 if str(file).endswith(config['raw_data']['raw_data_file']):
                     for sheet in config['raw_data']['sheets']:
@@ -34,7 +34,7 @@ def data_table_content(data):
 
 def load_nav_logo():
     for file in Path(__file__).parent.parent.parent.glob('*'):
-        if str(file).endswith('resources'):
+        if str(file).endswith('assets'):
             for resource in file.glob('*'):
                 if str(resource).endswith('logo.png'):
                     logo_file = resource
@@ -42,7 +42,7 @@ def load_nav_logo():
 
 def load_custom_css():
     for file in Path(__file__).parent.parent.parent.glob('*'):
-        if str(file).endswith('resources'):
+        if str(file).endswith('assets'):
             for resource in file.glob('*'):
                 if str(resource).endswith('.css'):
                     customcss = resource

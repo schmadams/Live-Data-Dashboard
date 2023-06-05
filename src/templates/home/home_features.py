@@ -59,9 +59,9 @@ def latest_reviews_section(prefix):
                              style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Granularity'),
                 dcc.Dropdown(id=f'{prefix}latest-reviews-filter-granularity-dropdown', multi=True,
                              style={'width': '10vw', 'margin': '1vw auto', 'opacity': '0.5', 'pointer-events': 'none'},
-                             placeholder='Select Granularity'),
+                             placeholder='Filter Granularity'),
                 dcc.Dropdown(id=f'{prefix}latest-reviews-rating-dropdown', multi=False,
-                             style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Granularity'),
+                             style={'width': '10vw', 'margin': '1vw auto'}, placeholder='Select Rating'),
             ], style={'width': '10%', 'margin': 'auto'}),
             html.Div(id=f'{prefix}latest-reviews-figure-container', hidden=False, className='column', children=[
                 dcc.Graph(id=f'{prefix}latest-reviews-figure', style={'width': '100%', 'height': '90%', 'margin': 'auto'})
@@ -74,7 +74,7 @@ def page_layout(prefix):
         create_navbar(),
         dbc.Accordion(
             children=[
-                # dbc.AccordionItem(title='Latest Reviews', children=latest_reviews_section(prefix)),
+                dbc.AccordionItem(title='Latest Reviews', children=latest_reviews_section(prefix)),
                 dbc.AccordionItem(title='Categorical Ratings', children=cat_2_rat_section_1(prefix)),
                 dbc.AccordionItem(title='Categorical Scatter Plot', children=cat_scatters(prefix)),
                 dbc.AccordionItem(title='Time Series Analysis', children=timeline_plot(prefix))
@@ -82,15 +82,3 @@ def page_layout(prefix):
         )
     ]
     return content
-
-
-
-
-
-
-
-
-
-
-
-#

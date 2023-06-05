@@ -9,11 +9,15 @@ log.setLevel(logging.ERROR)
 
 
 
-app = dash.Dash(__name__, title='Live Data Analysis', suppress_callback_exceptions=False, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, title='Live Data Analysis', suppress_callback_exceptions=True,#
+                external_stylesheets=[dbc.themes.BOOTSTRAP,
+                                      "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css",
+                                      "../assets/styles.css"])
+
+app = dash.Dash(__name__, external_stylesheets=[])
+
 
 server = app.server
-
-app.config.suppress_callback_exceptions = False
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -31,7 +35,3 @@ def display_page(pathname):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-
-    #todo - bug in loading the bar charts when filters have been created for the second plot
-
-

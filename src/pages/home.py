@@ -158,6 +158,8 @@ def create_cat_2_rat_figure(rat, cat, switch, data):
     if None in [cat, rat, data]:
         raise PreventUpdate
 
+    print('running builder')
+
     data = pd.DataFrame(data['data'])
     fig_builder = CategoricalRatingFigure(data=data, cat=cat, rat=rat)
     if switch:
@@ -181,81 +183,80 @@ def hide_cat_2_rat(fig, rat, cat):
     return hidden
 
 
-#
-# @callback(
-#     Output(f'{prefix}latest-reviews-granularity-dropdown', 'column'),
-#     Output(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
-#     Input(f'{prefix}config', 'data'),
-#     State(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
-#     prevent_initial_call=True
-# )
-# def populate_lastest_reviews_dropdown_granularity(config, selected):
-#     options = [{'label': str(name).replace('_', ''), 'value': name}
-#                for name in config['raw_data']['categorical_fields']]
-#     return options, selected
-#
-#
-# @callback(
-#     Output(f'{prefix}latest-reviews-filter-granularity-dropdown', 'style'),
-#     Input(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
-#     State(f'{prefix}latest-reviews-filter-granularity-dropdown', 'style'),
-#     prevent_initial_call=True
-# )
-# def show_gran_filter_dropdown(gran, style):
-#     if None in [gran, [gran]]:
-#         style['opacity'], style['pointer-events'] = '0.5', 'none'
-#     else:
-#         style['opacity'], style['pointer-events'] = '1', 'auto'
-#
-#     return style
-#
-#
-# @callback(
-#     Output(f'{prefix}latest-reviews-filter-granularity-dropdown', 'column'),
-#     Output(f'{prefix}latest-reviews-filter-granularity-dropdown', 'value'),
-#     Input(f'{prefix}latest-reviews-filter-granularity-dropdown', 'style'),
-#     State(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
-#     State(f'{prefix}config', 'data'),
-#     State(f'{prefix}data', 'dada'),
-#     State(f'{prefix}latest-reviews-filter-granularity-dropdown', 'value'),
-#     prevent_initial_call=True
-# )
-# def populate_lastest_reviews_dropdown_granularity_filter(style, gran, config, data, selected):
-#     if None in [gran, config, data]:
-#         raise PreventUpdate
-#     elif style['opacity'] == '0.5':
-#         raise PreventUpdate
-#     df = pd.DataFrame(data['data'])
-#     options = [{'label': str(name).replace('_', ''), 'value': name}
-#                for name in df[gran].unique()]
-#     return options, selected
-#
-#
-# @callback(
-#     Output(f'{prefix}latest-reviews-rating-dropdown', 'column'),
-#     Output(f'{prefix}latest-reviews-rating-dropdown', 'value'),
-#     Input(f'{prefix}config', 'data'),
-#     State(f'{prefix}latest-reviews-rating-dropdown', 'value'),
-#     prevent_initial_call=True
-# )
-# def populate_lastest_reviews_dropdown_rating(config, selected):
-#     if selected in [None, [None]]:
-#         selected = config['raw_data']['rating_fields'][0]
-#     options = [{'label': str(name).replace('_', ''), 'value': name}
-#                for name in config['raw_data']['rating_fields']]
-#     return options, selected
-#
-# @callback(
-#     Output(f'{prefix}latest-reviews-figure', 'figure'),
-#     Input(f'{prefix}latest-reviews-rating-dropdown', 'value'),
-#     Input(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
-#     Input(f'{prefix}latest-reviews-filter-granularity-dropdown', 'value'),
-#     State(f'{prefix}data', 'data'),
-#     prevent_initial_call=True
-# )
-# def create_latest_reviews_figure(rat, gran, gran_filter, data):
-#     if None in [rat, data]:
-#         raise PreventUpdate
-#
-#     plot_builder = LatestReviews(pd.DataFrame(data['data'], rat, gran, gran_filter))
-#
+
+@callback(
+    Output(f'{prefix}latest-reviews-granularity-dropdown', 'options'),
+    Output(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
+    Input(f'{prefix}config', 'data'),
+    State(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
+    prevent_initial_call=True
+)
+def populate_lastest_reviews_dropdown_granularity(config, selected):
+    options = [{'label': str(name).replace('_', ''), 'value': name}
+               for name in config['raw_data']['categorical_fields']]
+    return options, selected
+
+
+@callback(
+    Output(f'{prefix}latest-reviews-filter-granularity-dropdown', 'style'),
+    Output(f'{prefix}latest-reviews-filter-granularity-dropdown', 'options'),
+    Output(f'{prefix}latest-reviews-filter-granularity-dropdown', 'value'),
+    Input(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
+    State(f'{prefix}latest-reviews-filter-granularity-dropdown', 'style'),
+    State(f'{prefix}config', 'data'),
+    State(f'{prefix}data', 'data'),
+    State(f'{prefix}latest-reviews-filter-granularity-dropdown', 'value'),
+    prevent_initial_call=True
+)
+def show_gran_filter_dropdown(gran, style, config, data, selected):
+    if None in [config, data]:
+        raise PreventUpdate
+
+    if gran in [None, [None], []]:
+        style['opacity'], style['pointer-events'] = '0.5', 'none'
+        options, selected = [], None
+    else:
+        if not isinstance(gran, list):
+            gran = [gran]
+        options, df = ['All'], pd.DataFrame(data['data'])
+        for col in gran:
+            for val in df[col].unique():
+                options.append(f'{col}-{val}')
+        options = [{'label': str(name).replace('_', ''), 'value': name} for name in options]
+
+        style['opacity'], style['pointer-events'] = '1', 'auto'
+
+    return style, options, selected
+
+
+@callback(
+    Output(f'{prefix}latest-reviews-rating-dropdown', 'options'),
+    Output(f'{prefix}latest-reviews-rating-dropdown', 'value'),
+    Input(f'{prefix}config', 'data'),
+    State(f'{prefix}latest-reviews-rating-dropdown', 'value'),
+    prevent_initial_call=True
+)
+def populate_lastest_reviews_dropdown_rating(config, selected):
+    if selected in [None, [None]]:
+        selected = config['raw_data']['rating_fields'][0]
+    options = [{'label': str(name).replace('_', ''), 'value': name}
+               for name in config['raw_data']['rating_fields']]
+    return options, selected
+
+@callback(
+    Output(f'{prefix}latest-reviews-figure', 'figure'),
+    Input(f'{prefix}latest-reviews-rating-dropdown', 'value'),
+    Input(f'{prefix}latest-reviews-granularity-dropdown', 'value'),
+    Input(f'{prefix}latest-reviews-filter-granularity-dropdown', 'value'),
+    State(f'{prefix}data', 'data'),
+    prevent_initial_call=True
+)
+def create_latest_reviews_figure(rat, gran, gran_filter, data):
+    if None in [rat, data] or [] in [rat, data]:
+        raise PreventUpdate
+
+    if not isinstance(gran, list):
+        gran = [gran]
+
+    plot_builder = LatestReviews(pd.DataFrame(data['data'], rat, gran, gran_filter))
+
